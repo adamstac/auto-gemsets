@@ -1,80 +1,139 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
-    <!--[if lt IE 9]>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print"><!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <title>Auto-gemsets by daytonn</title>
-  </head>
-
-  <body>
-    <div id="container">
-      <div class="inner">
-
-        <header>
-          <h1>Auto-gemsets</h1>
-          <h2>Automatic, shimless, gemsets. For use with your ruby-version manager of choice.</h2>
-        </header>
-
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/daytonn/auto-gemsets/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/daytonn/auto-gemsets/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/daytonn/auto-gemsets" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
-
-        <hr>
-
-        <section id="main_content">
-          <h1 id="auto-gemsets">auto-gemsets</h1>
-<p>Tired of typing <code>rbenv-rehash</code>, <code>rvm gemset use</code>, and <code>rvm gemset create</code> for every project? <code>auto-gemsets</code> is for you.</p>
-<p>Any <code>Gemfile</code> you encounter will cause auto-gemsets to automatically create and switch to a gemset based on the Gemfile’s parent folder. Given a <code>Gemfile</code> in a directory named <code>my-project</code>, auto-gemsets will create a <code>~/.gemsets/my-project</code> directory (if one does not exist), and set all the GEM environment variables appropriate to that gemset. This means that you can enjoy sandboxed gem environments without having to micro-manage your GEM environment.</p>
-<h2 id="installation">Installation</h2>
-<h3 id="using-rubygems">Using RubyGems:</h3>
-<pre><code>gem install auto-gemsets
-gemset init</code></pre>
-<h3 id="configuration">Configuration:</h3>
-<p>The <code>gemset init</code> command will create a copy of <code>auto-gemsets.sh</code> and <code>default-gems.sh</code> into <code>/usr/local/share/auto-gemsets</code> To use auto-gemsets, you will need to source these files in your <code>~/.bashrc</code> (<code>~/.bash_profile</code> on OSX) or <code>~/.zshrc</code> file.</p>
-<pre><code>source /usr/local/share/auto-gemsets/auto-gemsets.sh
-source /usr/local/share/auto-gemsets/default-gems.sh</code></pre>
-<p>In addition to these two scripts, <code>init</code> also creates a <code>~/.auto-gemsets</code> config file to allow for customization of <code>auto-gemsets</code>.</p>
-<p>Once you source <code>.bashrc</code>, <code>.bash_profile</code>, or <code>~/.zshrc</code> (<code>source ~/.bashrc</code>) or open a new terminal auto-gemsets will now be active and managing your ruby gems.</p>
-<p>Since, <code>auto-gemsets</code> creates a new default gemset, you will need to reinstall <code>auto-gemsets</code> to use the <code>gemset</code> command.</p>
-<pre><code>gem install auto-gemsets</code></pre>
-<p>A NOTE ON UPGRADING: If you’ve already installed <code>auto-gemsets</code> you will receive a warning asking you if you wish to overwrite this installation. You may want to do this after updating your <code>auto-gemsets</code> version</p>
-<h3 id="default-gemset">Default Gemset:</h3>
-<p>A default gemset will be created for you when you run <code>gemset init</code> in <code>~/.gemsets/default</code>.</p>
-<p>If you wish to override this location simply set the <code>DEFAULT_GEMSET</code> variable somewhere in your <code>.bashrc</code>, <code>.bash_profile</code>, or <code>.zshrc</code> depending on your environment:</p>
-<pre><code># auto-gemsets
-export DEFAULT_GEMSET=&quot;/custom/path/to/default_gemset&quot;</code></pre>
-<p>auto-gemsets will add this gemset to your <code>GEM_PATH</code> and add it’s bin directory to your <code>PATH</code>. This gemset will always be active. When another gemset is also active, installed gems will automatically belong to that gemset. When <em>ONLY</em> the <code>default</code> gemset is active, installed gems will belong to the <code>default</code> gemset.</p>
-<h2 id="command-line">Command Line</h2>
-<p>Although auto-gemsets focuses on automatic management of your gemsets, there are times when interaction is necessary. For these occaisions, auto-gemsets comes with a command line application named <code>gemset</code>.</p>
-<p>See the <a href="https://github.com/daytonn/auto-gemsets/blob/master/HELP.md">HELP</a> file for <code>gemset</code>’s Documentation.</p>
-<p>There is also a utility that allows you to isolate your <code>default</code> gemset when running gem commands named <code>default-gems</code></p>
-<p>For more documentation simply type</p>
-<pre><code>default-gems</code></pre>
-<h2 id="default-gems">default-gems</h2>
-<p>The defalt-gems command is an auto-gemsets utility to manage gems in the default* gemset from within other gemsets.</p>
-<h2 id="usage">Usage:</h2>
-<p>default-gems (command) [options]</p>
-<h2 id="examples">Examples:</h2>
-<p>default-gems install mygem default-gems uninstall mygem default-gems list</p>
-<p>default-gems accepts any valid gem command, with any valid arguments and options. It is simply a pass-through to the gem command with the context of the default gemset.</p>
-        </section>
-
-        <footer>
-          Auto-gemsets is maintained by <a href="https://github.com/daytonn">daytonn</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
-
-
-      </div>
-    </div>
-  </body>
+        <title>
+            Auto-gemsets by daytonn
+        </title>
+    </head>
+    <body>
+        <div id="container">
+            <div class="inner">
+                <header>
+                    <h1>
+                        Auto-gemsets
+                    </h1>
+                    <h2>
+                        Automatic, shimless, gemsets. For use with your ruby-version manager of choice.
+                    </h2>
+                </header>
+                <section id="downloads" class="clearfix">
+                    <a href="https://github.com/daytonn/auto-gemsets/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a> <a href="https://github.com/daytonn/auto-gemsets/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a> <a href="https://github.com/daytonn/auto-gemsets" id="view-on-github" class="button"><span>View on GitHub</span></a>
+                </section>
+                <hr>
+                <section id="main_content">
+                    <h1 id="auto-gemsets">
+                        auto-gemsets
+                    </h1>
+                    <p>
+                        Tired of typing <code>rbenv-rehash</code>, <code>rvm gemset use</code>, and <code>rvm gemset create</code> for every project? <code>auto-gemsets</code> is for you.
+                    </p>
+                    <p>
+                        Any <code>Gemfile</code> you encounter will cause auto-gemsets to automatically create and switch to a gemset based on the Gemfile’s parent folder. Given a <code>Gemfile</code> in a directory named <code>my-project</code>, auto-gemsets will create a <code>~/.gemsets/my-project</code> directory (if one does not exist), and set all the GEM environment variables appropriate to that gemset. This means that you can enjoy sandboxed gem environments without having to micro-manage your GEM environment.
+                    </p>
+                    <h2 id="installation">
+                        Installation
+                    </h2>
+                    <h3 id="using-rubygems">
+                        Using RubyGems:
+                    </h3>
+                    <pre>
+                    <code>gem install auto-gemsets
+                    gemset init</code>
+                    </pre>
+                    <h3 id="configuration">
+                        Configuration:
+                    </h3>
+                    <p>
+                        The <code>gemset init</code> command will create a copy of <code>auto-gemsets.sh</code> and <code>default-gems.sh</code> into <code>/usr/local/share/auto-gemsets</code> To use auto-gemsets, you will need to source these files in your <code>~/.bashrc</code> (<code>~/.bash_profile</code> on OSX) or <code>~/.zshrc</code> file.
+                    </p>
+                    <pre>
+                    <code>source /usr/local/share/auto-gemsets/auto-gemsets.sh
+                    source /usr/local/share/auto-gemsets/default-gems.sh</code>
+                    </pre>
+                    <p>
+                        In addition to these two scripts, <code>init</code> also creates a <code>~/.auto-gemsets</code> config file to allow for customization of <code>auto-gemsets</code>.
+                    </p>
+                    <p>
+                        Once you source <code>.bashrc</code>, <code>.bash_profile</code>, or <code>~/.zshrc</code> (<code>source ~/.bashrc</code>) or open a new terminal auto-gemsets will now be active and managing your ruby gems.
+                    </p>
+                    <p>
+                        Since, <code>auto-gemsets</code> creates a new default gemset, you will need to reinstall <code>auto-gemsets</code> to use the <code>gemset</code> command.
+                    </p>
+                    <pre>
+                    <code>gem install auto-gemsets</code>
+                    </pre>
+                    <p>
+                        A NOTE ON UPGRADING: If you’ve already installed <code>auto-gemsets</code> you will receive a warning asking you if you wish to overwrite this installation. You may want to do this after updating your <code>auto-gemsets</code> version
+                    </p>
+                    <h3 id="default-gemset">
+                        Default Gemset:
+                    </h3>
+                    <p>
+                        A default gemset will be created for you when you run <code>gemset init</code> in <code>~/.gemsets/default</code>.
+                    </p>
+                    <p>
+                        If you wish to override this location simply set the <code>DEFAULT_GEMSET</code> variable somewhere in your <code>.bashrc</code>, <code>.bash_profile</code>, or <code>.zshrc</code> depending on your environment:
+                    </p>
+                    <pre>
+                    <code># auto-gemsets
+                    export DEFAULT_GEMSET="/custom/path/to/default_gemset"</code>
+                    </pre>
+                    <p>
+                        auto-gemsets will add this gemset to your <code>GEM_PATH</code> and add it’s bin directory to your <code>PATH</code>. This gemset will always be active. When another gemset is also active, installed gems will automatically belong to that gemset. When <em>ONLY</em> the <code>default</code> gemset is active, installed gems will belong to the <code>default</code> gemset.
+                    </p>
+                    <h2 id="command-line">
+                        Command Line
+                    </h2>
+                    <p>
+                        Although auto-gemsets focuses on automatic management of your gemsets, there are times when interaction is necessary. For these occaisions, auto-gemsets comes with a command line application named <code>gemset</code>.
+                    </p>
+                    <p>
+                        See the <a href="https://github.com/daytonn/auto-gemsets/blob/master/HELP.md">HELP</a> file for <code>gemset</code>’s Documentation.
+                    </p>
+                    <p>
+                        There is also a utility that allows you to isolate your <code>default</code> gemset when running gem commands named <code>default-gems</code>
+                    </p>
+                    <p>
+                        For more documentation simply type
+                    </p>
+                    <pre>
+                    <code>default-gems</code>
+                    </pre>
+                    <h2 id="default-gems">
+                        default-gems
+                    </h2>
+                    <p>
+                        The defalt-gems command is an auto-gemsets utility to manage gems in the default* gemset from within other gemsets.
+                    </p>
+                    <h2 id="usage">
+                        Usage:
+                    </h2>
+                    <p>
+                        default-gems (command) [options]
+                    </p>
+                    <h2 id="examples">
+                        Examples:
+                    </h2>
+                    <p>
+                        default-gems install mygem default-gems uninstall mygem default-gems list
+                    </p>
+                    <p>
+                        default-gems accepts any valid gem command, with any valid arguments and options. It is simply a pass-through to the gem command with the context of the default gemset.
+                    </p>
+                </section>
+                <footer>
+                    Auto-gemsets is maintained by <a href="https://github.com/daytonn">daytonn</a><br>
+                    This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
+                </footer>
+            </div>
+        </div>
+    </body>
 </html>
